@@ -1,0 +1,77 @@
+body,
+ul,
+p {
+    margin: 0;
+    padding: 0;
+}
+.popup {
+    width: 200px;
+}
+body {
+    padding: 10px 20px 20px;
+    height: 136px;
+    font: 12px"microsoft yahei", arial;
+    color: #333;
+}
+ul {
+    list-style: none;
+}
+body h1 {
+    font-size: 16px;
+}
+a {
+    color: #08c;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+.tar {
+    text-align: right;
+}
+.bfc {
+    overflow: hidden;
+}
+.title h1 {
+    float: left;
+    display: inline;
+}
+.title .extra {
+    padding-top: 12px;
+}
+#now {
+    color: #999;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px dotted #eee;
+}
+.dk-list {
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+.red {
+    color: #E4393C;
+}
+.green {
+    color: #B89366;
+}
+.gray {
+    color: #ccc;
+}
+#go {
+    font-size: 14px;
+    padding-right: 10px;
+    background: url(../images/more.png) right 7px no-repeat;
+}
+.options li {
+    margin-bottom: 10px;
+}
+.options input[type="text"] {
+    width: 4em;
+}
+.options .btn {
+    padding-top: 5px;
+}
+.options .notice {
+    color: #999;
+}

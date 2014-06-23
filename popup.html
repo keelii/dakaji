@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="styles/main.css" rel="stylesheet" />
+    <link href="styles/normalize.css" rel="stylesheet" />
+
+</head>
+
+<body class="popup">
+    <div class="title bfc">
+        <h1><strong class="fl">dk提醒</strong> </h1>
+        <div class="extra bfc tar"><a target="_blank" href="options.html">设置 »</a></div>
+    </div>
+
+    <div id="now"></div>
+    <ul class="dk-list">
+        <li>上班：<span id="am-sign" class="red">未打卡</span></li>
+        <li>下班：<span id="pm-sign" class="red">未打卡</span></li>
+    </ul>
+    <a target="_blank" id="go" href="http://v1.erp.jd.com/newhrm/kaoqing/frdakaji.aspx">去打卡</a>
+
+    <script src="scripts/store.js"></script>
+    <script src="scripts/popup.js"></script>
+</body>
+</html>

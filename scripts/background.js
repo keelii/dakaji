@@ -40,36 +40,36 @@ var get = function(id) {
     return document.getElementById(id);
 };
 
-var dakaUrl = 'http://v1.erp.jd.com/newhrm/kaoqing/frdakaji.aspx';
-
 // notifications
 var Notify = {
     create: function(id, opts, callback) {
         id = id || '';
         chrome.notifications.create(id, opts, function(i) {
             console.log(i + ' is created.');
-            if (callback) { callback(i); }
+            if (callback) {
+                callback(i);
+            }
         });
     },
     clear: function(id, callback) {
-       chrome.notifications.clear(id, function(isCleared) {
+        chrome.notifications.clear(id, function(isCleared) {
             if (callback) {
                 callback(isCleared);
             } else {
                 console.log(isCleared);
             }
-       }); 
+        });
     },
     clearAll: function(callback) {
         var _this = this;
         this.getAll(function(o) {
-            for( var n in o) {
+            for (var n in o) {
                 if (o.hasOwnProperty(n)) {
                     _this.clear(n);
                 }
             }
             callback();
-        });    
+        });
     },
     getAll: function(callback) {
         chrome.notifications.getAll(function(o) {
@@ -78,7 +78,7 @@ var Notify = {
             } else {
                 console.dir(o);
             }
-        });  
+        });
     }
 };
 
@@ -98,12 +98,15 @@ var DK_BG = {
         this.setDefaut();
 
         this.loopUpdateStatus();
+
     },
     loopUpdateStatus: function(ms) {
         var _this = this;
         var options = store.get('options');
         var opts = JSON.parse(options);
         var interval = Number(opts.interval);
+
+        this.dkUrl = opts.dkurl;
 
         _this.setBadgeNum();
         var timer = setInterval(function() {
@@ -122,14 +125,14 @@ var DK_BG = {
             var currDate = new Date().getDate();
             var cacheDate = new Date(cacheTS).getDate();
 
-            console.log(currDate);
-            console.log(cacheDate);
             // 明天
             if (currDate > cacheDate) {
                 store.del('amSigned');
                 store.del('pmSigned');
                 store.set('DK_TS', now);
-                Notify.clearAll();
+                try {
+                    Notify.clearAll();
+                } catch (e) {};
                 this.isNotified = false;
             }
         }
@@ -140,7 +143,8 @@ var DK_BG = {
             amEnd: 12,
             pmStart: 18,
             pmEnd: 24,
-            interval: 60000
+            interval: 60000,
+            dkurl: 'http://www.jd.com'
         };
 
         if (!store.get('amSigned')) {
@@ -194,12 +198,11 @@ var DK_BG = {
             title: 'hello',
             message: 'world',
             iconUrl: 'images/icon-128.png'
-        }, function() {
-        });
+        }, function() {});
 
         chrome.notifications.onClicked.addListener(function() {
             chrome.tabs.create({
-                url: dakaUrl,
+                url: _this.dkUrl,
                 active: true
             }, function() {
                 _this.setSign();
@@ -237,10 +240,11 @@ var DK_BG = {
         var pmSigned = parseInt(store.get('pmSigned'), 10);
         var total = 0;
 
-        if ( this.onAM() || this.onPM()) {
-            if ( amSigned === 0 ) { total++; }
-            if ( pmSigned === 0 ) { total++; }
-
+        if (this.onAM() && amSigned === 0) {
+            total++;
+        }
+        if (this.onPM() && pmSigned === 0) {
+            total++;
         }
 
         if (!this.onAM() && !this.onPM()) {
@@ -253,7 +257,7 @@ var DK_BG = {
             chrome.browserAction.setBadgeText({
                 text: '' + total
             });
-            if ( !this.isNotified ) {
+            if (!this.isNotified) {
                 this.setNotify();
             }
         } else {

@@ -95,6 +95,11 @@ var DK_FE = {
     },
     bindEvent: function() {
         var _this = this;
+        var opts = store.get('options');
+        var options = JSON.parse(opts);
+        var dkUrl = options.dkurl;
+
+        this.goSignEl.setAttribute('href', dkUrl);
         this.goSignEl.onclick = function() {
             _this.goSign.call(_this);
         };
@@ -163,6 +168,5 @@ DK_FE.init();
 chrome.runtime.sendMessage('setBadgeText', function(response) {
     console.log(response);
 });
-
 
 console.log('无痛打卡，你值得拥有。');

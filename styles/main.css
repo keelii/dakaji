@@ -75,3 +75,7 @@ a:hover {
 .options .notice {
     color: #999;
 }
+
+#dkurl {
+    width:10em;
+}

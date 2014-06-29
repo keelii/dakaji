@@ -31,17 +31,20 @@ var get = function(id) {
 
 var DK_FE = {
     init: function() {
+        var week = new Date().getDay();
+        var isWeekend = week == 6 || week == 0;
+
         this.nowEl = get('now');
         this.amSignEl = get('am-sign');
         this.pmSignEl = get('pm-sign');
         this.goSignEl = get('go');
 
-        // this.storeExpire();
-        // this.setDefaut();
-
         this.setCurrentTime();
-        this.setStatus();
-        this.bindEvent();
+        this.setStatus(isWeekend);
+
+        if ( !isWeekend ) {
+            this.bindEvent();
+        }
     },
     onAM: function() {
         var now = new Date();
@@ -71,9 +74,19 @@ var DK_FE = {
             return false;
         }
     },
-    setStatus: function() {
+    setStatus: function(isWeekend) {
         var amSigned = store.get('amSigned') === '1';
         var pmSigned = store.get('pmSigned') === '1';
+        var isWeekend = isWeekend;
+
+        if (isWeekend) {
+            this.amSignEl.className = 'gray';
+            this.amSignEl.innerHTML = '无需打卡';
+            this.pmSignEl.className = 'gray';
+            this.pmSignEl.innerHTML = '无需打卡';
+
+            return;
+        }
 
         if (amSigned) {
             this.amSignEl.className = 'gray';
@@ -165,8 +178,5 @@ var DK_FE = {
 
 DK_FE.init();
 
-chrome.runtime.sendMessage('setBadgeText', function(response) {
-    console.log(response);
-});
 
 console.log('无痛打卡，你值得拥有。');

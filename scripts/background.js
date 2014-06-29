@@ -105,15 +105,19 @@ var DK_BG = {
         var options = store.get('options');
         var opts = JSON.parse(options);
         var interval = Number(opts.interval);
+        var week = new Date().getDay();
+        var isWeekend = week == 6 || week == 0;
 
         this.dkUrl = opts.dkurl;
 
-        _this.setBadgeNum();
-        var timer = setInterval(function() {
-            _this.storeExpire();
-            _this.setDefaut();
+        if ( !isWeekend ) {
             _this.setBadgeNum();
-        }, interval || 60000);
+            var timer = setInterval(function() {
+                _this.storeExpire();
+                _this.setDefaut();
+                _this.setBadgeNum();
+            }, interval || 60000);            
+        }
     },
     storeExpire: function() {
         var now = new Date().getTime();

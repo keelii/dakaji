@@ -42,7 +42,7 @@ var DK_FE = {
         this.setCurrentTime();
         this.setStatus(isWeekend);
 
-        if ( !isWeekend ) {
+        if (!isWeekend) {
             this.bindEvent();
         }
     },
@@ -177,6 +177,5 @@ var DK_FE = {
 };
 
 DK_FE.init();
-
 
 console.log('无痛打卡，你值得拥有。');

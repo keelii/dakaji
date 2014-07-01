@@ -72,13 +72,15 @@ var Notify = {
         });
     },
     getAll: function(callback) {
-        chrome.notifications.getAll(function(o) {
-            if (callback) {
-                callback(o);
-            } else {
-                console.dir(o);
-            }
-        });
+        try {
+            chrome.notifications.getAll(function(o) {
+                if (callback) {
+                    callback(o);
+                } else {
+                    console.dir(o);
+                }
+            });
+        } catch (e) {}
     }
 };
 
@@ -126,17 +128,24 @@ var DK_BG = {
         if (!cacheTS) {
             store.set('DK_TS', now);
         } else {
-            var currDate = new Date().getDate();
-            var cacheDate = new Date(cacheTS).getDate();
+            var now = new Date();
+            var currDate = now.getDate();
+            var currMonth = now.getMonth() + 1;
+
+            var cacheNow = new Date(cacheTS);
+            var cacheDate = cacheNow.getDate();
+            var cacheMonth = cacheNow.getMonth() + 1;
+
 
             // 明天
-            if (currDate > cacheDate) {
+            if (currMonth > cacheMonth || currDate > cacheDate) {
                 store.del('amSigned');
                 store.del('pmSigned');
                 store.set('DK_TS', now);
                 try {
                     Notify.clearAll();
-                } catch (e) {};
+                } catch (e) {}
+
                 this.isNotified = false;
             }
         }
@@ -199,8 +208,8 @@ var DK_BG = {
 
         chrome.notifications.create(noId, {
             type: 'basic',
-            title: 'hello',
-            message: 'world',
+            title: '打卡提醒',
+            message: '一人打卡，全村光荣...',
             iconUrl: 'images/icon-128.png'
         }, function() {});
 

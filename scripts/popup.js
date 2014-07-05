@@ -85,6 +85,8 @@ var DK_FE = {
             this.pmSignEl.className = 'gray';
             this.pmSignEl.innerHTML = '无需打卡';
 
+            store.set('amSigned', '1');
+            store.set('amSigned', '1');
             return;
         }
 

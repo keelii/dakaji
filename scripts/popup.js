@@ -1,4 +1,4 @@
-'use strict';
+"use strict"
 
 // 整数补零
 function prefixInteger(num, length) {
@@ -32,7 +32,7 @@ var get = function(id) {
 var DK_FE = {
     init: function() {
         var week = new Date().getDay();
-        var isWeekend = week == 6 || week == 0;
+        var isWeekend = week === 6 || week === 0;
 
         this.nowEl = get('now');
         this.amSignEl = get('am-sign');
